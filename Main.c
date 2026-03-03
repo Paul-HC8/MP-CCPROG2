@@ -47,7 +47,7 @@ int main()
     int choice;
 
     // Prints out the Menu/Interface for our Simulator
-    while (choice != 4) 
+    while (choice != 9) 
     {
     	system("cls");
         printf("=========================================\n");
@@ -67,20 +67,8 @@ int main()
         printf("Enter choice: ");
         
         scanf("%d", &choice);
-
-        if (choice == 1) 
-        {
-            addUser(users, &userCount); 
-        }
-        else if (choice == 2) 
-        {
-            authenticate(users, userCount); 
-        }
-        else if (choice == 3) 
-        {
-            updateUser(users, userCount); 
-        }
-        system("pause");
+        
     }
     return 0;
 }
+
