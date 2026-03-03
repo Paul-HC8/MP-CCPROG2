@@ -16,7 +16,6 @@ struct Average{
 };
 
 
-
 // struct declaration for basketball player information (lastname, jersey number, games played)
 struct Player{
     char lastname[50];
