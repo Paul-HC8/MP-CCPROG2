@@ -363,11 +363,8 @@ void resetData(struct Team teams[4], struct GameRecord gameRecords[100], int *ga
 
 void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gameCount, struct stats boxScorePlayers[])
 {
-    int homeTeamId, awayTeamId, selectedMode; // Variables to hold user selections
-    int hometeamScore = 0, awayteamScore = 0; // Variables to track team scores
-    int hIdx = homeTeamId - 1; // Set Indices for easier access (Converting 1-4 input to 0-3 index)
-    int aIdx = awayTeamId - 1;
-    int i;
+    int homeTeamId, awayTeamId, selectedMode;
+    int hometeamScore = 0, awayteamScore = 0;
 
     CLEAR_SCREEN();
     printf("=========================================\n");
@@ -376,7 +373,7 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
     printf(">>> TIP OFF | SELECT THE TEAMS PLAYING <<<\n");
 
     // Display menu using global arrays
-    for (i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
         printf(" [%d] %s%s%s\n", i + 1, teamColors[i], teamNames[i], COLOR_RESET);
     }
@@ -394,7 +391,9 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
         return;
     }
 
-    
+    // Set Indices for easier access (Converting 1-4 input to 0-3 index)
+    int hIdx = homeTeamId - 1;
+    int aIdx = awayTeamId - 1;
 
     printf("\n>>>             CHOOSE MODE             <<<\n");
     printf(" [1] MANUAL ENTRY MODE (Box Score)\n");
@@ -415,7 +414,7 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
 
         // INPUT HOME TEAM STATS
         printf(">>> ENTER %s%s%s PLAYER STATS:\n", teamColors[hIdx], teamNames[hIdx], COLOR_RESET);
-        for (i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             printf("%s%s%s (Pts Reb Ast): ", teamColors[hIdx], teams[hIdx].MainPlayers[i].lastName, COLOR_RESET);
             scanf("%d %d %d", &boxScorePlayers[i].points, &boxScorePlayers[i].rebounds, &boxScorePlayers[i].assists);
@@ -426,7 +425,7 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
 
         // INPUT AWAY TEAM STATS
         printf(">>> ENTER %s%s%s PLAYER STATS:\n", teamColors[aIdx], teamNames[aIdx], COLOR_RESET);
-        for ( i = 5; i < 10; i++)
+        for (int i = 5; i < 10; i++)
         {
             printf("%s%s%s (Pts Reb Ast): ", teamColors[aIdx], teams[aIdx].MainPlayers[i - 5].lastName, COLOR_RESET);
             scanf("%d %d %d", &boxScorePlayers[i].points, &boxScorePlayers[i].rebounds, &boxScorePlayers[i].assists);
@@ -445,21 +444,21 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
                teamColors[aIdx], teamNames[aIdx], COLOR_RESET);
 
         // Simulate stats for home team
-        for ( i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
-            boxScorePlayers[i].points = (rand() % 31) + HOME_ADVANTAGE; // 0-30 points + home advantage
-            boxScorePlayers[i].rebounds = rand() % 16; // 0-15 rebounds
-            boxScorePlayers[i].assists = rand() % 11;  // 0-10 assists
-            hometeamScore += boxScorePlayers[i].points; // Add to home team score
+            boxScorePlayers[i].points = (rand() % 31) + HOME_ADVANTAGE;
+            boxScorePlayers[i].rebounds = rand() % 16;
+            boxScorePlayers[i].assists = rand() % 11;
+            hometeamScore += boxScorePlayers[i].points;
         }
 
         // Simulate stats for away team
-        for (i = 5; i < 10; i++)
+        for (int i = 5; i < 10; i++)
         {
-            boxScorePlayers[i].points = rand() % 31; // 0-30 points 
-            boxScorePlayers[i].rebounds = rand() % 16;  // 0-15 rebounds
-            boxScorePlayers[i].assists = rand() % 11;  // 0-10 assists
-            awayteamScore += boxScorePlayers[i].points; // Add to away team score
+            boxScorePlayers[i].points = rand() % 31;
+            boxScorePlayers[i].rebounds = rand() % 16;
+            boxScorePlayers[i].assists = rand() % 11;
+            awayteamScore += boxScorePlayers[i].points;
         }
     }
     else
@@ -492,14 +491,14 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
     }
 
     // Update player totals in struct
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
     {
         teams[hIdx].MainPlayers[i].totalPoints += boxScorePlayers[i].points;
         teams[hIdx].MainPlayers[i].totalRebounds += boxScorePlayers[i].rebounds;
         teams[hIdx].MainPlayers[i].totalAssists += boxScorePlayers[i].assists;
         teams[hIdx].MainPlayers[i].gamesPlayed++;
     }
-    for ( i = 5; i < 10; i++)
+    for (int i = 5; i < 10; i++)
     {
         teams[aIdx].MainPlayers[i - 5].totalPoints += boxScorePlayers[i].points;
         teams[aIdx].MainPlayers[i - 5].totalRebounds += boxScorePlayers[i].rebounds;
