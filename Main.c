@@ -303,7 +303,7 @@ void updateBoxScores(int gameID, struct Team teams[], int homeID, int awayID, st
 void resetData(struct Team teams[4], struct GameRecord gameRecords[100], int *gameCount)
 {
     char confirm;
-    printf("WARNING: This will wipe all stats and history. Continue? (Y/N): ");
+    printf("WARNING: This will wipe all stats and history. Press Y to confirm: ");
     scanf(" %c", &confirm);
 
     if (confirm == 'Y' || confirm == 'y')
@@ -353,6 +353,10 @@ void resetData(struct Team teams[4], struct GameRecord gameRecords[100], int *ga
             fclose(fpBox);
 
         printf("\nLeague has been reset to factory defaults.\n");
+    }
+    else
+    {
+        printf("\nReset cancelled. Returning to main menu.\n");
     }
     PAUSE();
 }

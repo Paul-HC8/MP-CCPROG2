@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/rafaellealiahcortez/Desktop/MP/MP-CCPROG2",
+      "program": "/Users/rafaellealiahcortez/Desktop/MP/MP-CCPROG2/build/Debug/outDebug"
+    }
+  ]
+}
