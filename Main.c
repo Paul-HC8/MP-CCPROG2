@@ -468,10 +468,6 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
     }
 
     // --- FINAL RESULTS SECTION ---
-    printf("\n--- FINAL BUZZER: %d - %d ---\n", hometeamScore, awayteamScore);
-    printf("FINAL SCORE: %s%s %d%s - %s%s %d%s\n",
-           teamColors[hIdx], teamNames[hIdx], hometeamScore, COLOR_RESET,
-           teamColors[aIdx], teamNames[aIdx], awayteamScore, COLOR_RESET);
 
     if (hometeamScore > awayteamScore)
     {
@@ -487,8 +483,49 @@ void simulateGame(struct Team teams[], struct GameRecord gameRecords[], int *gam
     }
     else
     {
-        printf("\n>>> IT'S A TIE!!! <<<\n");
+        while (hometeamScore == awayteamScore)
+        {
+            printf("\n>>> OVERTIME!  <<<\n");
+
+            if (selectedMode == 1)
+            {
+                // Overtime Manual Entry
+                printf("\n>>> OVERTIME STATS FOR %s%s%s:\n", teamColors[hIdx], teamNames[hIdx], COLOR_RESET);
+                for (int i = 0; i < 5; i++)
+                {
+                    printf("%s%s%s (Pts Reb Ast): ", teamColors[hIdx], teams[hIdx].MainPlayers[i].lastName, COLOR_RESET);
+                    scanf("%d %d %d", &boxScorePlayers[i].points, &boxScorePlayers[i].rebounds, &boxScorePlayers[i].assists);
+                    hometeamScore += boxScorePlayers[i].points;
+                }
+
+                printf("\n"); // Space between teams
+
+                printf(">>> OVERTIME STATS FOR %s%s%s:\n", teamColors[aIdx], teamNames[aIdx], COLOR_RESET);
+                for (int i = 5; i < 10; i++)
+                {
+                    printf("%s%s%s (Pts Reb Ast): ", teamColors[aIdx], teams[aIdx].MainPlayers[i - 5].lastName, COLOR_RESET);
+                    scanf("%d %d %d", &boxScorePlayers[i].points, &boxScorePlayers[i].rebounds, &boxScorePlayers[i].assists);
+                    awayteamScore += boxScorePlayers[i].points;
+                }
+            }
+            else
+            {
+                // Overtime Quick Sim
+                for (int i = 0; i < 5; i++)
+                {
+                    boxScorePlayers[i].points = (rand() % 11) + HOME_ADVANTAGE; // Less points in OT
+                    boxScorePlayers[i].rebounds = rand() % 6;
+                    boxScorePlayers[i].assists = rand() % 4;
+                    hometeamScore += boxScorePlayers[i].points;
+                }
+            }
+        }
     }
+
+    printf("\n--- FINAL BUZZER: %d - %d ---\n", hometeamScore, awayteamScore);
+    printf("FINAL SCORE: %s%s %d%s - %s%s %d%s\n",
+           teamColors[hIdx], teamNames[hIdx], hometeamScore, COLOR_RESET,
+           teamColors[aIdx], teamNames[aIdx], awayteamScore, COLOR_RESET);
 
     // Update player totals in struct
     for (int i = 0; i < 5; i++)
